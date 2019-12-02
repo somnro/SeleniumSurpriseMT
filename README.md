@@ -1,7 +1,7 @@
 # SeleniumSurpriseMT
 一个java程序，自动刷到最大红包--美团红包
 
-#安装环境
+#安装环境\n
 ##Windows系统
 ##jdk1.8
 ##chrome浏览器，本机是 Google Chrome	77.0.3865.75 (正式版本) （32 位）
