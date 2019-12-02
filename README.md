@@ -21,7 +21,6 @@
             <version>4.5.16</version>
         </dependency>
         
-#示例效果
-![image]
-(https://github.com/somnro/SeleniumSurpriseMT/blob/master/123.gif)
+#示例效果  
+![image](https://github.com/somnro/SeleniumSurpriseMT/blob/master/123.gif)
 
