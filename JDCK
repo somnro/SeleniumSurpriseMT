@@ -1,0 +1,75 @@
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.StrUtil;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.Collections;
+
+public class JDCK {
+    static String name = "hang";
+    static String date = DateTime.now().toString("MMdd");
+
+    static String url = "https://plogin.m.jd.com/login/login";
+
+    public static void main(String[] args) {
+        login();
+//        pin_key("jd_54dbd7f25ffb0", "AAJhg3VuADD2uVJPMiBIXO4sYWHCCg8tSbpSQu1RXbQUrdoNlheIr2yqCr6xXtiP_9KxFQqhpEU", name);
+    }
+
+    private static void login() {
+        System.setProperty("webdriver.chrome.driver", "D:\\2soft\\chromedriver_win32\\chromedriver.exe");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        //去掉提示
+        chromeOptions.setExperimentalOption("useAutomationExtension", false);
+        chromeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+
+        ChromeDriver driver = new ChromeDriver(chromeOptions);
+
+        try {
+            driver.get(url);
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+
+            ThreadUtil.sleep(2000L);
+            driver.findElementByXPath("//*[@id=\"app\"]/div/p[2]/input").click();
+            ThreadUtil.sleep(20000L);
+
+            String q = "";
+            while (StrUtil.isBlank(q)) {
+                try {
+                    driver.findElementByClassName("icon-center");
+                    q = "11";
+                } catch (Exception e) {
+
+                }
+                ThreadUtil.sleep(3000L);
+            }
+
+            String pt_pin = driver.manage().getCookieNamed("pt_pin").getValue();
+            String pt_key = driver.manage().getCookieNamed("pt_key").getValue();
+
+            pin_key(pt_pin, pt_key, name);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.manage().deleteAllCookies();
+            driver.quit();
+        }
+    }
+
+    private static void pin_key(String pt_pin, String pt_key, String name) {
+        System.out.println("JD_COOKIE");
+        System.out.println("pt_pin=" + pt_pin + ";" + "pt_key=" + pt_key + ";");
+
+        System.out.println("JD_WSCK");
+        System.out.println("pin=" + pt_pin + ";" + "wskey=" + pt_key + ";");
+
+        System.out.println(pt_pin + "_" + date + "_" + name);
+    }
+}
